@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>跑步健康APP</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+        .container {
+            width: 90%;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+        .stat {
+            text-align: center;
+        }
+        .stat h2 {
+            font-size: 2em;
+            margin: 0;
+        }
+        .stat p {
+            font-size: 1.2em;
+            color: #555;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>跑步健康APP</h1>
+        <p>记录你的跑步数据，保持健康</p>
+    </header>
+
+    <div class="container">
+        <div class="stats">
+            <div class="stat">
+                <h2 id="distance">0 km</h2>
+                <p>总跑步距离</p>
+            </div>
+            <div class="stat">
+                <h2 id="time">0:00</h2>
+                <p>总跑步时间</p>
+            </div>
+            <div class="stat">
+                <h2 id="steps">0</h2>
+                <p>总步数</p>
+            </div>
+        </div>
+
+        <button onclick="startRunning()">开始跑步</button>
+        <button onclick="stopRunning()">停止跑步</button>
+    </div>
+
+    <script>
+        let distance = 0;
+        let time = 0;
+        let steps = 0;
+        let interval;
+        let isRunning = false;
+
+        function startRunning() {
+            if (!isRunning) {
+                isRunning = true;
+                interval = setInterval(updateStats, 1000);
+            }
+        }
+
+        function stopRunning() {
+            clearInterval(interval);
+            isRunning = false;
+        }
+
+        function updateStats() {
+            time++;
+            steps += 100;  // 假设每秒跑100步
+            distance = (steps / 1000).toFixed(2);  // 假设每1000步为1公里
+
+            document.getElementById("time").textContent = formatTime(time);
+            document.getElementById("steps").textContent = steps;
+            document.getElementById("distance").textContent = `${distance} km`;
+        }
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+    </script>
+
+</body>
+</html>
